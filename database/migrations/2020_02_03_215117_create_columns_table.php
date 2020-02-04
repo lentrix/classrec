@@ -18,6 +18,7 @@ class CreateColumnsTable extends Migration
             $table->bigInteger('my_class_id')->unsigned();
             $table->string('title');
             $table->string('component');//exam, quiz, participation
+            $table->smallInteger('grading'); //1-midterm, 2-final
             $table->integer('total');
             $table->timestamps();
             $table->foreign('my_class_id')->references('id')->on('my_classes');

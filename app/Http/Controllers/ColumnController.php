@@ -46,7 +46,8 @@ class ColumnController extends Controller
             'my_class_id' => $myClass->id,
             'title'=>$request['title'],
             'component'=>$component,
-            'total'=>$request['total']
+            'total'=>$request['total'],
+            'grading'=>$myClass->grading
         ]);
 
         foreach($myClass->enrols as $enrol) {
@@ -61,6 +62,7 @@ class ColumnController extends Controller
 
     public function view(MyClass $myClass, Column $column) {
         $scores = Score::where('column_id', $column->id)
+                ->where('grading',$myClass->grading)
                 ->join('enrols','enrols.id','=','scores.enrol_id')
                 ->join('users','users.id','=','enrols.user_id')
                 ->select('scores.*')
@@ -81,5 +83,26 @@ class ColumnController extends Controller
         }
 
         return redirect()->back()->with('Info','The scores have been updated!');
+    }
+
+    public function edit(MyClass $myClass, Column $column) {
+        return view('columns.edit', [
+            'myClass'=>$myClass,
+            'column'=>$column
+        ]);
+    }
+
+    public function update(MyClass $myClass, Column $column, Request $request) {
+        $this->validate($request, [
+            'title' => 'required',
+            'total' => 'required|numeric'
+        ]);
+
+        $column->update([
+            'title' => $request['title'],
+            'total' => $request['total']
+        ]);
+
+        return redirect("/myclass/$myClass->id/column/$column->id/view")->with('Info','The column has been updated.');
     }
 }

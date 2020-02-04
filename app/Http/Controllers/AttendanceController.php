@@ -32,7 +32,8 @@ class AttendanceController extends Controller
             StudAttendance::create([
                 'attendance_id' => $attn->id,
                 'enrol_id' => $enrol->id,
-                'attendance' => 'pr'
+                'attendance' => 'pr',
+                'grading' => $myClass->grading
             ]);
         }
 

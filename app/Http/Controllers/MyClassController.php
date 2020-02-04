@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MyClass;
 use App\Enrol;
+use Faker\Factory;
 
 class MyClassController extends Controller
 {
@@ -73,5 +74,43 @@ class MyClassController extends Controller
                 ->get();
 
         return view('my-classes.students',['enrols'=>$enrols,'myClass'=>$myClass]);
+    }
+
+    public function edit(MyClass $myClass) {
+        return view('my-classes.edit', [
+            'myClass' => $myClass
+        ]);
+    }
+
+    public function update(MyClass $myClass, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'code' => 'unique:my_classes'
+        ]);
+
+        $myClass->update([
+            'name' => $request['name'],
+            'description' => $request['description'],
+            'schedule' => $request['schedule'],
+            'venue' => $request['venue'],
+            'sem' => $request['sem'],
+        ]);
+
+        return redirect("/myclass/$myClass->id")->with('Info','Class details has been updated.');
+    }
+
+    public function recode(MyClass $myClass) {
+        $faker = Factory::create();
+        $str = $faker->bothify('??#?#?');
+        $myClass->update(['code' => $str]);
+
+        return redirect("/myclass/$myClass->id")->with('Info','Class code has been changed.');
+    }
+
+    public function changeGrading(MyClass $myClass, Request $request) {
+        $myClass->grading = $request['grading'];
+        $myClass->save();
+        return redirect("/myclass/$myClass->id");
     }
 }

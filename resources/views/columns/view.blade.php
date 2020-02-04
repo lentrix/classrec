@@ -12,7 +12,10 @@
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <h2>Record Scores</h2>
+        <h2>
+            Record Scores
+            <a href='{{url("/myclass/$myClass->id/column/$column->id/edit")}}' class="btn btn-secondary float-right">Edit</a>
+        </h2>
         <div class="subtitle">
             {{$column->title}} | {{$myClass->name}} | {{$column->created_at->format('l D, Y')}}
         </div>

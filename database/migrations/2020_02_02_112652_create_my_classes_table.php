@@ -26,6 +26,7 @@ class CreateMyClassesTable extends Migration
             $table->integer('quiz_weight')->default(1);
             $table->integer('part_weight')->default(1);
             $table->integer('exam_weight')->default(1);
+            $table->smallInteger('grading')->default(1);//1-midterm, 2-final
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
