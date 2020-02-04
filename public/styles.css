@@ -1,0 +1,23 @@
+/* Custom styles */
+
+.subtitle {
+    font-size: 0.95em;
+    color: #777;
+    font-style: italic;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+@media screen and (min-width:765px) {
+    .hide-med {
+        display: none;
+    }
+}
+
+@media screen and (max-width:764px) {
+    .hide-sm {
+        display:none;
+    }
+}
