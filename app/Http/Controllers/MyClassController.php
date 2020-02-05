@@ -68,8 +68,6 @@ class MyClassController extends Controller
     }
 
     public function students(MyClass $myClass) {
-        // $enrols = Enrol::where(['my_class_id'=>$myClass->id])
-        //     ->with('user')->get();
 
         $enrols = Enrol::join('users','users.id','=','enrols.user_id')
                 ->orderBy('users.lname')->select('users.*')->select('enrols.*')

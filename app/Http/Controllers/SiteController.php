@@ -31,13 +31,16 @@ class SiteController extends Controller
         ]);
 
         if($login) {
-            return redirect('/home');
+            return redirect('/');
         }else {
             return redirect()->back()->with('Error','Invalid username or password.');
         }
     }
 
     public function home() {
+
+        if(auth()->guest()) return redirect('/login');
+
         if(auth()->user()->role=="teacher"){
             $classes = MyClass::where(['user_id'=>auth()->user()->id])->get();
             return view('home',['classes'=>$classes]);

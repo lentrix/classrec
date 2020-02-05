@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class TeacherMiddleware
+class StudentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class TeacherMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role=="teacher"){
+        if(auth()->user()->role=="student"){
             return $next($request);
         }else {
             return redirect()->back()->with('Error','You are not allowed to perform this task.');
