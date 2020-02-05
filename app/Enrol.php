@@ -32,4 +32,10 @@ class Enrol extends Model
                 ->where('enrol_id', $this->id)
                 ->first();
     }
+
+    public function attendance($attnId) {
+        return StudAttendance::where('attendance_id', $attnId)
+                    ->where('enrol_id', $this->id)
+                    ->first();
+    }
 }

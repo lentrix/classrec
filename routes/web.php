@@ -38,12 +38,16 @@ Route::get('/myclass/{myClass}/attendance/{attn}', 'AttendanceController@view');
 Route::post('/myclass/{myClass}/attendance/{attn}', 'AttendanceController@record');
 
 Route::post('/myclass/{myClass}/column/{column}/record', 'ColumnController@record');
+Route::post('/myclass/{myClass}/column/{column}/common-score', 'ColumnController@commonScore');
 Route::get('/myclass/{myClass}/column/{component}/create','ColumnController@create');
 Route::get('/myclass/{myClass}/column/{column}/view', 'ColumnController@view');
 Route::get('/myclass/{myClass}/column/{column}/edit', 'ColumnController@edit');
 Route::put('/myclass/{myClass}/column/{column}', 'ColumnController@update');
 Route::get('/myclass/{myClass}/column/{component}', 'ColumnController@index');
 Route::post('/myclass/{myClass}/column/{component}', 'ColumnController@store');
+
+Route::get('/myclass/{myClass}/students/{enrol}', 'StudentController@view');
+Route::post('/myclass/{myClass}/students/remove', 'StudentController@remove');
 
 
 Route::get('/enrol','MyClassController@enrol');

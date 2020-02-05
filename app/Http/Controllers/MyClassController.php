@@ -28,6 +28,9 @@ class MyClassController extends Controller
             'sem' => $request['sem'],
             'code' => $request['code'],
             'active' => 1,
+            'quiz_weight' => $request['quiz_weight'],
+            'exam_weight' => $request['exam_weight'],
+            'part_weight' => $request['part_weight'],
             'user_id' => auth()->user()->id
         ]);
 
@@ -71,6 +74,7 @@ class MyClassController extends Controller
         $enrols = Enrol::join('users','users.id','=','enrols.user_id')
                 ->orderBy('users.lname')->select('users.*')->select('enrols.*')
                 ->where('my_class_id', $myClass->id)
+                ->select('enrols.*')
                 ->get();
 
         return view('my-classes.students',['enrols'=>$enrols,'myClass'=>$myClass]);
@@ -95,6 +99,9 @@ class MyClassController extends Controller
             'schedule' => $request['schedule'],
             'venue' => $request['venue'],
             'sem' => $request['sem'],
+            'quiz_weight' => $request['quiz_weight'],
+            'exam_weight' => $request['exam_weight'],
+            'part_weight' => $request['part_weight'],
         ]);
 
         return redirect("/myclass/$myClass->id")->with('Info','Class details has been updated.');

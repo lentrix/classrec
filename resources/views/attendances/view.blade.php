@@ -14,7 +14,7 @@
     <div class="col-md-6 offset-md-3">
         <h2>Check Attendance</h2>
         <div class="subtitle">
-            {{$attn->date->format('l - F d, Y')}}
+            {{$attn->date->format('l - F d, Y')}} ({{$myClass->gradingPeriod}})
         </div>
         <hr>
         {!!Form::open(['url'=>"/myclass/$myClass->id/attendance/$attn->id"])!!}

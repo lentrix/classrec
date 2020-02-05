@@ -20,7 +20,7 @@ class MyClass extends Model
     }
 
     public function attendances() {
-        return $this->hasMany('App\Attendance')->orderBy('date','DESC');
+        return $this->hasMany('App\Attendance')->orderBy('date','ASC');
     }
 
     public function columns($component="") {
@@ -29,5 +29,9 @@ class MyClass extends Model
         }else{
             return $this->hasMany('App\Component');
         }
+    }
+
+    public function getGradingPeriodAttribute() {
+        return $this->grading==1?"Midterm":"Final";
     }
 }

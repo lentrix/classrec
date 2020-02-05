@@ -11,9 +11,10 @@
 
 <h2>
     {{$myClass->name}} - <span class="capitalize">{{$component}}</span>
+    ({{$myClass->gradingPeriod}})
     <a href='{{url("/myclass/$myClass->id/column/$component/create")}}'
             class="btn btn-secondary float-right">
-        + New
+        +
     </a>
 </h2>
 
@@ -26,21 +27,21 @@
             <tr class="bg-light">
                 <th rowspan="2">Student</th>
                 @foreach($cols as $col)
-                <th>
+                <th class="text-center">
                     <a href='{{url("/myclass/$myClass->id/column/$col->id/view")}}'>
                         {{$col->title}}
                     </a>
                 </th>
                 @endforeach
-                <th>TOTAL</th>
+                <th class="text-center">TOTAL</th>
             </tr>
             <tr class="bg-light">
                 <?php $tot=0;?>
                 @foreach($cols as $col)
-                <th>{{$col->total}}</th>
+                <th class="text-center">{{$col->total}}</th>
                 <?php $tot+=$col->total ?>
                 @endforeach
-                <th>{{$tot}}</th>
+                <th class="text-center">{{$tot}}</th>
             </tr>
         </thead>
         <tbody>
@@ -51,17 +52,27 @@
                 @foreach($cols as $col)
                 <?php $score = $enrol->score($col->id)->score; ?>
                 <?php $total+=$score;?>
-                <td>{{$score}}</td>
+                <td class="text-center">{{$score}}</td>
                 @endforeach
-                <td>{{$total}}</td>
+                <td class="text-center">{{$total}}</td>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
 
-{{-- show accordion on small screen --}}
+{{-- show on small screen --}}
 <div class="hide-med">
-    Hide on medium
+
+    <div class="list-group">
+        @foreach($cols as $col)
+        <a href='{{url("/myclass/$myClass->id/column/$col->id/view")}}' class="list-group-item list-group-item-action">
+            {{$col->created_at->format('l M d, Y')}}
+            <span class="float-right">
+                {{$col->total}}
+            </span>
+        </a>
+        @endforeach
+    </div>
 </div>
 @stop

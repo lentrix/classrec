@@ -10,12 +10,17 @@ class Column extends Model
         'my_class_id',
         'title',
         'component',
-        'total'
+        'total',
+        'grading'
     ];
 
     public $dates = ['create_at','updated_at'];
 
     public function myClass() {
         return $this->belongsTo('App\MyClass');
+    }
+
+    public function scores() {
+        return $this->hasMany('App\Score');
     }
 }

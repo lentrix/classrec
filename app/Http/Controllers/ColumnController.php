@@ -13,6 +13,7 @@ class ColumnController extends Controller
     public function index(MyClass $myClass, $component) {
         $cols = Column::where('my_class_id',$myClass->id)
                 ->where('component', $component)
+                ->where('grading', $myClass->grading)
                 ->get();
 
         $enrols = Enrol::join('users','enrols.user_id','=','users.id')
@@ -62,7 +63,6 @@ class ColumnController extends Controller
 
     public function view(MyClass $myClass, Column $column) {
         $scores = Score::where('column_id', $column->id)
-                ->where('grading',$myClass->grading)
                 ->join('enrols','enrols.id','=','scores.enrol_id')
                 ->join('users','users.id','=','enrols.user_id')
                 ->select('scores.*')
@@ -104,5 +104,14 @@ class ColumnController extends Controller
         ]);
 
         return redirect("/myclass/$myClass->id/column/$column->id/view")->with('Info','The column has been updated.');
+    }
+
+    public function commonScore(MyClass $myClass, Column $column, Request $request) {
+        $scores = $column->scores;
+        foreach($scores as $score) {
+            $score->update(['score'=>$request['common_score']]);
+        }
+
+        return redirect("/myclass/$myClass->id/column/$column->id/view");
     }
 }

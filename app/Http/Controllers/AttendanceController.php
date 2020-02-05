@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendance;
+use App\Enrol;
 use App\MyClass;
 use App\StudAttendance;
 use Illuminate\Http\Request;
@@ -11,9 +12,20 @@ use mysqli;
 class AttendanceController extends Controller
 {
     public function index(MyClass $myClass) {
-        $attns = $myClass->attendances;
-        return view('attendances.index',
-            ['myClass'=>$myClass,'attendances'=>$attns]);
+        $attns = Attendance::where('my_class_id', $myClass->id)
+                    ->where('grading',$myClass->grading)
+                    ->get();
+
+        $enrols = Enrol::where('my_class_id',$myClass->id)
+                    ->join('users','users.id', '=', 'enrols.user_id')
+                    ->orderBy('lname')
+                    ->select('enrols.*')
+                    ->get();
+        return view('attendances.index',[
+            'myClass'=>$myClass,
+            'attendances'=>$attns,
+            'enrols'=>$enrols
+        ]);
     }
 
     public function create(MyClass $myClass) {
@@ -25,7 +37,8 @@ class AttendanceController extends Controller
         $attn = Attendance::create([
             'my_class_id'=>$myClass->id,
             'date'=>$request['date'],
-            'remarks'=>$request['remarks']
+            'remarks'=>$request['remarks'],
+            'grading' => $myClass->grading
         ]);
 
         foreach($myClass->enrols as $enrol) {
@@ -33,7 +46,6 @@ class AttendanceController extends Controller
                 'attendance_id' => $attn->id,
                 'enrol_id' => $enrol->id,
                 'attendance' => 'pr',
-                'grading' => $myClass->grading
             ]);
         }
 
