@@ -77,4 +77,19 @@ class AttendanceController extends Controller
 
         return redirect("/myclass/$myClass->id/attendance")->with('Info','Attendance have been saved');
     }
+
+    public function rescan(MyClass $myClass, Attendance $attn) {
+        $attn->rescan();
+        return redirect("/myclass/$myClass->id/attendance/$attn->id")->with('Info','Rescanning of attendance completed.');
+    }
+
+    public function delete(MyClass $myClass, Attendance $attn) {
+
+        foreach($attn->studentAttendances as $studAttn) {
+            $studAttn->delete();
+        }
+
+        $attn->delete();
+        return redirect("/myclass/$myClass->id/attendance")->with('Info','Thie attendance record has been deleted.');
+    }
 }

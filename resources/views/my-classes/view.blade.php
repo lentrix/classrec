@@ -10,9 +10,21 @@
     </ol>
 </nav>
 
+<div class="btn-group float-right">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      ...
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <a href='{{url("/myclass/$myClass->id/edit")}}' class="dropdown-item">Edit</a>
+        <a href='{{url("/myclass/$myClass->id/recode")}}'
+            class="dropdown-item">Change Class Code</a>
+        <button data-toggle="modal" data-target="#gradingModal"
+            class="dropdown-item">Change Grading Period</button>
+    </div>
+</div>
+
 <h2>
     {{$myClass->name}}
-    <a href='{{url("/myclass/$myClass->id/edit")}}' class="btn btn-secondary float-right">Edit</a>
 </h2>
 
 <div class="row">
@@ -26,17 +38,16 @@
                 <th>Class Code</th>
                 <td>
                     <strong>{{$myClass->code}}</strong>
-                    <a href='{{url("/myclass/$myClass->id/recode")}}'
-                        class="btn btn-info btn-sm float-right">Change</a>
                 </td>
             </tr>
             <tr>
                 <th>Grading Period</th>
                 <td>
                     {{$myClass->grading==1?"Midterm":"Final"}}
-                    <button data-toggle="modal" data-target="#gradingModal"
-                        class="btn btn-info btn-sm float-right">Change</button>
                 </td>
+            </tr>
+            <tr>
+                <th>Population</th><td>{{count($myClass->enrols)}}</td>
             </tr>
         </table>
     </div>

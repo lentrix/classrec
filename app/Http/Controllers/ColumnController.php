@@ -95,12 +95,14 @@ class ColumnController extends Controller
     public function update(MyClass $myClass, Column $column, Request $request) {
         $this->validate($request, [
             'title' => 'required',
-            'total' => 'required|numeric'
+            'total' => 'required|numeric',
+            'grading' => 'required|numeric'
         ]);
 
         $column->update([
             'title' => $request['title'],
-            'total' => $request['total']
+            'total' => $request['total'],
+            'grading' => $request['grading'],
         ]);
 
         return redirect("/myclass/$myClass->id/column/$column->id/view")->with('Info','The column has been updated.');
@@ -108,10 +110,27 @@ class ColumnController extends Controller
 
     public function commonScore(MyClass $myClass, Column $column, Request $request) {
         $scores = $column->scores;
+        $common_score = $request['common_score'];
+
+        if($common_score>$column->total) {
+            return redirect()->back()->with('Error','The common score cannot be greater than ' . $column->total);
+        }
+
         foreach($scores as $score) {
             $score->update(['score'=>$request['common_score']]);
         }
 
         return redirect("/myclass/$myClass->id/column/$column->id/view");
+    }
+
+    public function rescan(MyClass $myClass, Column $column) {
+        $column->rescan();
+        return redirect("/myclass/{$myClass->id}/column/$column->id/view")->with('Info','Rescan complete.');
+    }
+
+    public function delete(MyClass $myClass, Column $column) {
+        $component = $column->component;
+        $column->delete();
+        return redirect("/myclass/$myClass->id/column/$component")->with('Info',"The $component column has been deleted.");
     }
 }

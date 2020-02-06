@@ -18,13 +18,12 @@ class Enrol extends Model
         return $this->belongsTo('App\MyClass');
     }
 
-    public function attendances() {
-        return $this->hasMany('App\Attendance')->orderBy('date','DESC');
+    public function studAttendances() {
+        return $this->hasMany('App\StudAttendance');
     }
 
-    public function scores($component) {
-        return Score::where('enrol_id', $this->id)
-                ->get();
+    public function scores() {
+        return $this->hasMany('App\Score');
     }
 
     public function score($colId) {

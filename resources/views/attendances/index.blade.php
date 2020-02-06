@@ -40,7 +40,10 @@
                 <td>{{($i+1)}}.) {{$enrol->user->fullName}}</td>
                 @foreach($attendances as $attn)
                 <td class="text-center">
-                    {{$enrol->attendance($attn->id)->attendance}}
+                    <?php
+                        $studAttn = $enrol->attendance($attn->id);
+                    ?>
+                    {{$studAttn?$studAttn->attendance:'x'}}
                 </td>
                 @endforeach
             </tr>

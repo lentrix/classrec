@@ -50,8 +50,12 @@
                 <?php $total = 0; ?>
                 <td>{{$enrol->user->fullName}}</td>
                 @foreach($cols as $col)
-                <?php $score = $enrol->score($col->id)->score; ?>
-                <?php $total+=$score;?>
+                    @if($scoreObj = $enrol->score($col->id))
+                        <?php $score=$scoreObj->score;?>
+                        <?php $total+=$score;?>
+                    @else
+                        <?php $score = null?>
+                    @endif
                 <td class="text-center">{{$score}}</td>
                 @endforeach
                 <td class="text-center">{{$total}}</td>

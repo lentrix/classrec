@@ -34,7 +34,7 @@ class MyClassController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     public function show(MyClass $myClass) {
@@ -62,7 +62,7 @@ class MyClassController extends Controller
                 'user_id' => auth()->user()->id,
                 'my_class_id' => $myClass->id
             ]);
-            return redirect('/home')->with('Info',
+            return redirect('/')->with('Info',
                 "You have been enrolled to $myClass->name successfully!");
         }
     }

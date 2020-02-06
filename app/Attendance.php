@@ -19,4 +19,19 @@ class Attendance extends Model
     public function studentAttendances() {
         return $this->hasMany('App\StudAttendance');
     }
+
+    public function rescan() {
+        foreach($this->myClass()->first()->enrols as $enrol) {
+            $studAttn = StudAttendance::where('enrol_id', $enrol->id)
+                        ->where('attendance_id', $this->id)
+                        ->first();
+            if(!$studAttn) {
+                StudAttendance::create([
+                    'enrol_id' => $enrol->id,
+                    'attendance_id' => $this->id,
+                    'attendance' => 'ab'
+                ]);
+            }
+        }
+    }
 }

@@ -6,7 +6,8 @@
       <li class="breadcrumb-item"><a href='{{url("/")}}'>Home</a></li>
       <li class="breadcrumb-item"><a href='{{url("/myclass/$myClass->id")}}'>{{$myClass->name}}</a></li>
       <li class="breadcrumb-item"><a href='{{url("/myclass/$myClass->id/column/$column->component")}}'><span class="capitalize">{{$column->component}}</span></a></li>
-      <li class="breadcrumb-item">{{$column->title}}</li>
+      <li class="breadcrumb-item"><a href='{{url("/myclass/$myClass->id/column/$column->id/view")}}'>{{$column->title}}</a></li>
+      <li class="breadcrumb-item">Edit</li>
     </ol>
 </nav>
 
@@ -23,6 +24,14 @@
         <div class="form-group">
             {{Form::label('total')}}
             {{Form::number('total',null,['class'=>'form-control'])}}
+        </div>
+
+        <div class="form-group">
+            {{Form::label('grading','Grading Period')}}
+            {{Form::select('grading',[
+                '1' => 'Midterm',
+                '2' => 'Final'
+            ],null,['class'=>'form-control'])}}
         </div>
 
         <div class="form-group">

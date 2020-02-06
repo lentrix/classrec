@@ -8,6 +8,6 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <script src="{{asset('jquery.js')}}"></script>
     <script src="{{asset('popper.js')}}"></script>
-    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <title>{{env('APP_NAME')}}</title>
 </head>
