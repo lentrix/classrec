@@ -16,8 +16,7 @@
         </table>
     </div>
     <div class="col-md-8">
-        <h3>Student Performance</h3>
-        <p class="alert alert-info">This page is under development..</p>
+        @include('students._performance')
     </div>
 </div>
 

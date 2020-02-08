@@ -11,7 +11,9 @@ class StudentController extends Controller
     public function view(MyClass $myClass, Enrol $enrol) {
         return view('students.view',[
             'myClass' => $myClass,
-            'enrol' => $enrol
+            'enrol' => $enrol,
+            'Midterm' => $enrol->performance($myClass->id, 1),
+            'Final' => $enrol->performance($myClass->id, 2)
         ]);
     }
 

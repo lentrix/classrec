@@ -42,7 +42,9 @@ class SiteController extends Controller
         if(auth()->guest()) return redirect('/login');
 
         if(auth()->user()->role=="teacher"){
-            $classes = MyClass::where(['user_id'=>auth()->user()->id])->get();
+            $classes = MyClass::where(['user_id'=>auth()->user()->id])
+                ->orderBy('name')
+                ->get();
             return view('home',['classes'=>$classes]);
         }else {
             $enrols = Enrol::where(['user_id'=>auth()->user()->id])

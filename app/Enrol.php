@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Enrol extends Model
 {
@@ -37,4 +38,68 @@ class Enrol extends Model
                     ->where('enrol_id', $this->id)
                     ->first();
     }
+
+    public function classComponentSummary($classId, $component, $grading) {
+        $totals = Column::where('component', $component)
+                ->where('my_class_id', $classId)
+                ->where('grading', $grading)
+                ->pluck('total');
+
+        $total = 0;
+        $totalObtained = 0;
+        foreach($totals as $tot) {
+            $total += $tot;
+        }
+
+        $totalScoreObtained = DB::table('scores')->where(
+            'enrol_id',$this->id)->whereIn('column_id',
+            DB::table('columns')->where('my_class_id',$classId)
+                    ->where('grading',$grading)
+                    ->where('component', $component)
+                    ->pluck('id')
+        )->sum('score');
+
+        return [
+            'total' => $total,
+            'obtained' => $totalScoreObtained*1
+        ];
+
+    }
+
+    public function performance($classId, $grading) {
+        $summary = [];
+        foreach(['quiz','participation','exam'] as $component) {
+            $summary[$component] = Score::where('enrol_id', $this->id)
+                    ->join('columns','columns.id','scores.column_id')
+                    ->where('columns.component', $component)
+                    ->where('columns.grading', $grading)
+                    ->where('columns.my_class_id',$classId)
+                    ->with('column')
+                    ->get();
+        }
+
+        return $summary;
+    }
+
+    public function summary($classId, $grading) {
+        $summary = [];
+
+        foreach(['quiz','participation','exam'] as $component) {
+
+            $cols = Column::where('my_class_id',$classId)
+                    ->where('grading', $grading)
+                    ->where('component', $component);
+
+            $scores = Score::where('enrol_id', $this->id)
+                    ->whereIn('column_id',$cols->pluck('id'));
+
+            $summary[$component] = [
+                'total' => $cols->sum('total'),
+                'score' => $scores->sum('score')
+            ];
+        }
+
+        return $summary;
+    }
+
 }

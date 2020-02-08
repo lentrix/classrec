@@ -61,6 +61,8 @@ Route::group(['middleware'=>'auth'], function(){
 
         Route::get('/myclass/{myClass}/students/{enrol}', 'StudentController@view');
         Route::delete('/myclass/{myClass}/students/{enrol}', 'EnrolController@remove');
+        Route::get('/myclass/{myClass}/students/{enrol}/change-password','EnrolController@changePasswordForm');
+        Route::post('/myclass/{myClass}/students/{enrol}/change-password','EnrolController@changePassword');
     });
 
 

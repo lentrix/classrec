@@ -15,7 +15,7 @@
         Menu
     </button>
     <div class="dropdown-menu dropdown-menu-right">
-        <a href='{{url("")}}' class="dropdown-item">Change Password</a>
+        <a href='{{url("/myclass/$myClass->id/students/$enrol->id/change-password")}}' class="dropdown-item">Change Password</a>
         <button class="dropdown-item text-danger"
                 data-toggle="modal" data-target="#removeModal">
             Remove from class
@@ -26,11 +26,12 @@
 <h2>Student Summary</h2>
 <div class="subtitle">
     <strong>{{$enrol->user->idnum}}</strong> | {{$enrol->user->fullName}} |
-    {{$myClass->name}} <span class="hide-sm">- {{$myClass->description}}</span> ({{$myClass->gradingPeriod}})
+    {{$myClass->name}} <span class="hide-sm">- {{$myClass->description}}</span>
 </div>
 
 <div class="row">
     <div class="col-md-6">
+        <h3>Student Details</h3>
         <table class="table table-striped table-bordered">
             <tr><th>ID Number</th><th>{{$enrol->user->idnum}}</th></tr>
             <tr><th>Last Name</th><td>{{$enrol->user->lname}}</td></tr>
@@ -41,33 +42,7 @@
 
     </div>
     <div class="col-md-6">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Components</th>
-                <th>Midterm</th>
-                <th>Final</th>
-            </tr>
-            <tr>
-                <td>Attendance</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Quizzes</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Participation</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Examination</td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+        @include('students._performance')
     </div>
 </div>
 
