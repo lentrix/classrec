@@ -17,7 +17,4 @@ class StudentController extends Controller
         ]);
     }
 
-    public function remove(MyClass $myClass, Request $request) {
-
-    }
 }

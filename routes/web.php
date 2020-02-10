@@ -39,6 +39,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/myclass/{myClass}/edit','MyClassController@edit');
         Route::get('/myclass/{myClass}/students','MyClassController@students');
         Route::get('/myclass/{myClass}/recode','MyClassController@recode');
+        Route::get('/myclass/{myClass}/summary','MyClassController@summary');
 
         Route::get('/myclass/{myClass}/attendance', 'AttendanceController@index');
         Route::get('/myclass/{myClass}/attendance/create', 'AttendanceController@create');

@@ -34,4 +34,8 @@ class MyClass extends Model
     public function getGradingPeriodAttribute() {
         return $this->grading==1?"Midterm":"Final";
     }
+
+    public function getTotalWeightsAttribute() {
+        return $this->quiz_weight+$this->part_weight+$this->exam_weight;
+    }
 }

@@ -84,7 +84,7 @@ class Enrol extends Model
     public function summary($classId, $grading) {
         $summary = [];
 
-        foreach(['quiz','participation','exam'] as $component) {
+        foreach(['quiz', 'participation', 'exam'] as $component) {
 
             $cols = Column::where('my_class_id',$classId)
                     ->where('grading', $grading)
@@ -100,6 +100,35 @@ class Enrol extends Model
         }
 
         return $summary;
+    }
+
+    public function grade($grading) {
+        $weightedScore = 0;
+        $totalWeights = 0;
+        $weights =[
+            'quiz' => $this->myClass->quiz_weight,
+            'participation' => $this->myClass->part_weight,
+            'exam' => $this->myClass->exam_weight
+        ];
+
+        foreach(['quiz','participation','exam'] as $comp) {
+            $cols = Column::where('my_class_id',$this->myClass->id)
+                ->where('grading', $grading)
+                ->where('component', $comp);
+
+            $scores = Score::where('enrol_id', $this->id)
+                ->whereIn('column_id',$cols->pluck('id'))->sum('score');
+
+            $totals = $cols->sum('total');
+
+            if($totals>0) {
+                $weightedScore += ($scores/$totals)*$weights[$comp];
+            }else {
+                return "-";
+            }
+        }
+
+        return number_format($weightedScore,2) ;
     }
 
 }

@@ -118,4 +118,17 @@ class MyClassController extends Controller
         $myClass->save();
         return redirect("/myclass/$myClass->id");
     }
+
+    public function summary(MyClass $myClass) {
+        $enrols = Enrol::join('users','users.id','=','enrols.user_id')
+            ->orderBy('users.lname')->select('users.*')->select('enrols.*')
+            ->where('my_class_id', $myClass->id)
+            ->select('enrols.*')
+            ->get();
+
+        return view('my-classes.summary', [
+            'myClass'=>$myClass,
+            'enrols' => $enrols
+        ]);
+    }
 }

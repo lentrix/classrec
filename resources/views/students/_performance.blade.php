@@ -12,7 +12,18 @@
             </li>
         </ul>
 
-        <?php $pct = []; ?>
+        <?php $pct = [
+            1 => [
+                'quiz'=>'0',
+                'participation'=>'0',
+                'exam'=>'0'
+            ],
+            2 => [
+                'quiz'=>'0',
+                'participation'=>'0',
+                'exam'=>'0'
+            ],
+        ]; ?>
         <div class="tab-content" id="myTabContent">
             @foreach([1=>'Midterm',2=>'Final'] as $grading=>$term)
             <div class="tab-pane fade {{$myClass->grading==$grading?'show active':''}}" id="{{$term}}" role="tabpanel" aria-labelledby="{{$term}}-tab">
@@ -49,7 +60,7 @@
                                 <td class="text-center">{{$totScore}}</td>
                                 <td class="text-center">
                                     @if($total>0)
-                                    {{number_format(($pct[$grading][$component]=$totScore/$total)*100,2)}}%
+                                    {{ number_format(($pct[$grading][$component]=$totScore/$total)*100,2) }}%
                                     @endif
                                 </td>
                             </tr>
@@ -63,21 +74,33 @@
                 <br>
                 <h3>Summary</h3>
                 <table class="table table-striped">
-                    <thead>
+                    <thead class="bg-info">
                         <tr>
-                            <th>Component</th>
-                            <th>Midterm</th>
-                            <th>Final</th>
+                            <th rowspan="2">Component</th>
+                            <th colspan="2" class="text-center">Weighted Score</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Midterm</th>
+                            <th class="text-center">Final</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(['quiz','participation','exam'] as $comp)
+                        <?php $mtws = 0; $ftws=0; ?>
+                        @foreach(['quiz'=>'quiz','part'=>'participation','exam'=>'exam'] as $c=>$comp)
                         <tr>
-                            <td>{{$comp}}</td>
-                            <td>{{ isset($pct[1][$comp]) ? $pct[1][$comp] : '-' }}</td>
-                            <td>{{ isset($pct[2][$comp]) ? $pct[2][$comp] : '-' }}</td>
+                            <?php $wname = $c . "_weight"; ?>
+                            <td><span style="text-transform: capitalize">{{$comp}}</span></td>
+                            <td class="text-center">{{ number_format($m = $pct[1][$comp] * $enrol->myClass->$wname, 2)}}</td>
+                            <td class="text-center">{{ number_format($f = $pct[2][$comp] * $enrol->myClass->$wname, 2)}}</td>
+                            <?php $mtws+=$m; $ftws+=$f; ?>
                         </tr>
                         @endforeach
+                        <tr>
+                            <th>TOTAL</th>
+                            <?php $totalWeights = $enrol->myClass->totalWeights; ?>
+                            <td class="text-center">{{ number_format($mgrade = ($mtws/$totalWeights)*100, 2)}}%</td>
+                            <td class="text-center">{{ number_format($fgrade = ($ftws/$totalWeights)*100, 2)}}%</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
