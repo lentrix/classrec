@@ -47,17 +47,39 @@
                 </td>
             </tr>
             <tr>
-                <th>Population</th><td>{{count($myClass->enrols)}}</td>
+                <th>Population</th><td>{{$myClass->countStud()}}</td>
             </tr>
         </table>
     </div>
     <div class="col-md-5">
         <div class="list-group">
-            <a href='{{url("myclass/$myClass->id/students")}}' class="list-group-item list-group-item-action">Students</a>
-            <a href='{{url("myclass/$myClass->id/attendance")}}' class="list-group-item list-group-item-action">Attendance</a>
-            <a href='{{url("myclass/$myClass->id/column/participation")}}' class="list-group-item list-group-item-action">Participation</a>
-            <a href='{{url("myclass/$myClass->id/column/quiz")}}' class="list-group-item list-group-item-action">Quiz</a>
-            <a href='{{url("myclass/$myClass->id/column/exam")}}' class="list-group-item list-group-item-action">Examination</a>
+            <a href='{{url("myclass/$myClass->id/students")}}' class="list-group-item list-group-item-action">
+                Students
+                <span class="badge badge-pill badge-success float-right">
+                    {{$myClass->countStud()}}
+                </span>
+            </a>
+            <a href='{{url("myclass/$myClass->id/attendance")}}' class="list-group-item list-group-item-action">
+                Attendance <span class="float-right badge badge-pill badge-info">{{$myClass->attendanceCount()}}</span>
+            </a>
+            <a href='{{url("myclass/$myClass->id/column/participation")}}' class="list-group-item list-group-item-action">
+                Participation
+                <span class="badge badge-pill badge-info float-right">
+                    {{$myClass->countColumn('participation')}}
+                </span>
+            </a>
+            <a href='{{url("myclass/$myClass->id/column/quiz")}}' class="list-group-item list-group-item-action">
+                Quiz
+                <span class="badge badge-pill badge-info float-right">
+                    {{$myClass->countColumn('quiz')}}
+                </span>
+            </a>
+            <a href='{{url("myclass/$myClass->id/column/exam")}}' class="list-group-item list-group-item-action">
+                Examination
+                <span class="badge badge-pill badge-info float-right">
+                    {{$myClass->countColumn('exam')}}
+                </span>
+            </a>
             <a href='{{url("myclass/$myClass->id/summary")}}' class="list-group-item list-group-item-action">Summary</a>
             <a href='{{url("myclass/$myClass->id/settings")}}' class="bg-lightp list-group-item list-group-item-action">Settings</a>
         </div>

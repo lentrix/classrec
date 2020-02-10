@@ -14,7 +14,7 @@
         <tr>
             <th>Class Name</th>
             <th>Description</th>
-            <th class="hide-sm">Schedule</th>
+            <th class="hide-sm">Population</th>
             <th class="hide-sm">Venue</th>
         </tr>
     </thead>
@@ -23,8 +23,13 @@
 
         <tr>
             <td><a href="{{url('/myclass/' . $cls->id)}}" class="btn btn-sm btn-secondary">{{$cls->name}}</a></td>
-            <td>{{$cls->description}}</td>
-            <td class="hide-sm">{{$cls->schedule}}</td>
+            <td>
+                {{$cls->description}}
+                <div class="subtitle hide-md" style="font-size: 0.8em">
+                    {{$cls->schedule}}
+                </div>
+            </td>
+            <td class="hide-sm">{{$cls->countStud()}}</td>
             <td class="hide-sm">{{$cls->venue}}</td>
         </tr>
 

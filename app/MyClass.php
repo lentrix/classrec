@@ -38,4 +38,22 @@ class MyClass extends Model
     public function getTotalWeightsAttribute() {
         return $this->quiz_weight+$this->part_weight+$this->exam_weight;
     }
+
+    public function attendanceCount() {
+        return Attendance::where('my_class_id', $this->id)
+                ->where('grading', $this->grading)
+                ->count();
+    }
+
+    public function countColumn($component) {
+        return Column::where('my_class_id', $this->id)
+                ->where('grading', $this->grading)
+                ->where('component', $component)
+                ->count();
+    }
+
+    public function countStud() {
+        return Enrol::where('my_class_id', $this->id)
+                ->count();
+    }
 }

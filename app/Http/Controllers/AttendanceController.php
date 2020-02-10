@@ -12,9 +12,7 @@ use mysqli;
 class AttendanceController extends Controller
 {
     public function index(MyClass $myClass) {
-        $attns = Attendance::where('my_class_id', $myClass->id)
-                    ->where('grading',$myClass->grading)
-                    ->get();
+        $attns = $myClass->attendances->where('grading', $myClass->grading);
 
         $enrols = Enrol::where('my_class_id',$myClass->id)
                     ->join('users','users.id', '=', 'enrols.user_id')
