@@ -25,6 +25,9 @@ Route::post('/register', 'SiteController@registration');
 
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/logout', 'SiteController@logout');
+    Route::get('/profile', 'SiteController@profile');
+    Route::get('/profile/edit', 'SiteController@editProfile');
+    Route::put('/profile/update', 'SiteController@updateProfile');
 
     Route::group(['middleware'=>'teacher'], function(){
         Route::get('/myclass/create', 'MyClassController@create');

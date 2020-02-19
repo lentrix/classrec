@@ -92,4 +92,31 @@ class SiteController extends Controller
         return redirect('/')->with('Info',
             'You have successfully signed up. You may now sign in.');
     }
+
+    public function profile() {
+        return view('profile', ['user'=>auth()->user()]);
+    }
+
+    public function editProfile() {
+        return view('edit-profile',['user'=>auth()->user()]);
+    }
+
+    public function updateProfile(Request $request) {
+        $user = auth()->user();
+        $this->validate($request, [
+            'lname' => 'required',
+            'fname' => 'required',
+            'username' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $user->update([
+            'lname' => $request['lname'],
+            'fname' => $request['fname'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+        ]);
+
+        return redirect('/profile')->with('Info','Your profile has been updated.');
+    }
 }

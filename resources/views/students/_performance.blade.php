@@ -43,7 +43,10 @@
                             <?php $totScore=0; $total=0; ?>
                             @foreach($gdSummary as $score)
                             <tr>
-                                <td>{{$score->column->created_at->format('M-d')}}</td>
+                                <td>
+                                    {{$score->column->created_at->format('M-d')}}
+                                    | {{$score->column->title}}
+                                </td>
                                 <td class="text-center">{{$score->column->total}}</td>
                                 <td class="text-center">{{$score->score}}</td>
                                 <td class="text-center">

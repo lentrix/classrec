@@ -71,7 +71,8 @@
     <div class="list-group">
         @foreach($cols as $col)
         <a href='{{url("/myclass/$myClass->id/column/$col->id/view")}}' class="list-group-item list-group-item-action">
-            {{$col->created_at->format('l M d, Y')}}
+            {{$col->title}} <br>
+            <span class="subtitle">{{$col->created_at->format('l M d, Y')}}</span>
             <span class="float-right">
                 {{$col->total}}
             </span>

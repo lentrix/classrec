@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h3>Class Detais</h3>
+        <h3>Class Details</h3>
         <table class="table table-striped">
             <tr><th>Name</th><td>{{$enrol->myClass->name}}</td></tr>
             <tr><th>Description</th><td>{{$enrol->myClass->description}}</td></tr>

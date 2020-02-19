@@ -13,7 +13,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/profile')}}">Profile</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/logout')}}">Logout</a>
                 </li>
