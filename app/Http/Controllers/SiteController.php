@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\MyClass;
 use App\User;
 use App\Enrol;
+use App\StudAttendance;
 
 class SiteController extends Controller
 {
@@ -49,7 +50,8 @@ class SiteController extends Controller
         }else {
             $enrols = Enrol::where(['user_id'=>auth()->user()->id])
                     ->with('myClass')->get();
-            return view('home-student',['enrols'=>$enrols]);
+            $interactiveAttn = StudAttendance::interactive(auth()->user()->id);
+            return view('home-student',['enrols'=>$enrols,'interactiveAttn'=>$interactiveAttn]);
         }
     }
 

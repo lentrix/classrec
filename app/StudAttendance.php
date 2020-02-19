@@ -15,4 +15,16 @@ class StudAttendance extends Model
     public function enrol() {
         return $this->belongsTo('App\Enrol');
     }
+
+    public static function interactive($userId) {
+        return StudAttendance::join('attendances','attendances.id','stud_attendances.attendance_id')
+                ->join('enrols','enrols.id','stud_attendances.enrol_id')
+                ->join('users','users.id','enrols.user_id')
+                ->where('users.id',$userId)
+                ->where('attendances.interactive', true)
+                ->where('attendance','ab')
+                ->select('stud_attendances.*')
+                ->with('enrol.myClass')->get();
+
+    }
 }

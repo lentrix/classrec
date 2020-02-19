@@ -19,6 +19,13 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <a href='{{url("/myclass/$myClass->id/attendance/$attn->id/rescan")}}'
                         class="dropdown-item">Re-scan</a>
+                @if($attn->interactive)
+                    <a href='{{url("/myclass/$myClass->id/attendance/$attn->id/stop-interactive")}}'
+                            class="dropdown-item">Stop Interactivity</a>
+                @else
+                    <a href='{{url("/myclass/$myClass->id/attendance/$attn->id/make-interactive")}}'
+                        class="dropdown-item">Make Interactivity</a>
+                @endif
                 <button data-toggle="modal" data-target="#deleteAttendanceModal"
                         class="dropdown-item bg-warning">
                     Delete

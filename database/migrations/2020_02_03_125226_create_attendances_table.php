@@ -19,6 +19,7 @@ class CreateAttendancesTable extends Migration
             $table->date('date');
             $table->smallInteger('grading')->default(1);//1-midterm, 2-final
             $table->string('remarks')->nullable();
+            $table->boolean('interactive')->default(0);
 
             $table->foreign('my_class_id')->references('id')->on('my_classes');
         });

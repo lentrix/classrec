@@ -36,14 +36,17 @@ class AttendanceController extends Controller
             'my_class_id'=>$myClass->id,
             'date'=>$request['date'],
             'remarks'=>$request['remarks'],
-            'grading' => $myClass->grading
+            'grading' => $myClass->grading,
+            'interactive' => $request['interactive']
         ]);
+
+        $def = $request['interactive'] ? "ab" : "pr";
 
         foreach($myClass->enrols as $enrol) {
             StudAttendance::create([
                 'attendance_id' => $attn->id,
                 'enrol_id' => $enrol->id,
-                'attendance' => 'pr',
+                'attendance' => $def,
             ]);
         }
 
@@ -89,5 +92,20 @@ class AttendanceController extends Controller
 
         $attn->delete();
         return redirect("/myclass/$myClass->id/attendance")->with('Info','Thie attendance record has been deleted.');
+    }
+
+    public function interactiveResponse(StudAttendance $studAttn) {
+        $studAttn->update(['attendance'=>'pr']);
+        return redirect('/')->with('Info','You have responded as present in the interactive attendance.');
+    }
+
+    public function makeInteractive(MyClass $myClass, Attendance $attn) {
+        $attn->update(['interactive'=>1]);
+        return redirect()->back()->with('Info','This attendace is now interactive.');
+    }
+
+    public function stopInteractive(MyClass $myClass, Attendance $attn) {
+        $attn->update(['interactive'=>0]);
+        return redirect()->back()->with('Info','This attendace is no longer interactive.');
     }
 }

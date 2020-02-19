@@ -5,6 +5,20 @@
     <a href="{{url('/enrol')}}" class="btn btn-secondary float-right">+Enrol</a>
 </h1>
 <hr>
+
+@if(count($interactiveAttn)>0)
+    <div class="alert alert-info">
+        Your teacher has posted an interactive attendance that you
+        haven't responded yet.
+    @foreach($interactiveAttn as $intr)
+        <div>
+            {{$intr->enrol->myClass->name}} - {{$intr->enrol->myClass->description}}
+            <a href='{{url("/attendance/interactive-response/$intr->id")}}' class="btn btn-success btn-sm">Respond as present</a>
+        </div>
+    @endforeach
+    </div>
+@endif
+
 <table class="table table-striped">
     <thead>
         <tr>

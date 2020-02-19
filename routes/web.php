@@ -51,6 +51,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::delete('/myclass/{myClass}/attendance/{attn}', 'AttendanceController@delete');
         Route::get('/myclass/{myClass}/attendance/{attn}', 'AttendanceController@view');
         Route::post('/myclass/{myClass}/attendance/{attn}', 'AttendanceController@record');
+        Route::get('/myclass/{myClass}/attendance/{attn}/stop-interactive', 'AttendanceController@stopInteractive');
+        Route::get('/myclass/{myClass}/attendance/{attn}/make-interactive', 'AttendanceController@makeInteractive');
 
         Route::post('/myclass/{myClass}/column/{column}/record', 'ColumnController@record');
         Route::get('/myclass/{myClass}/column/{column}/rescan', 'ColumnController@rescan');
@@ -74,6 +76,7 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('/enrol','MyClassController@enrol');
         Route::post('/enrol','MyClassController@enrolment');
         Route::get('/enrol/{enrol}/view', 'EnrolController@view');
+        Route::get('/attendance/interactive-response/{studAttn}', 'AttendanceController@interactiveResponse');
     });
 });
 

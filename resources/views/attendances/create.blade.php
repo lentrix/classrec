@@ -23,6 +23,10 @@
             {{Form::text('remarks',null,['class'=>'form-control'])}}
         </div>
         <div class="form-group">
+            {{Form::checkBox('interactive')}}
+            {{Form::label('interactive')}}
+        </div>
+        <div class="form-group">
             <button class="btn btn-primary" type="submit">Next</button>
         </div>
         {!!Form::close()!!}
